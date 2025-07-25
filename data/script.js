@@ -4,6 +4,9 @@ let speed = 0, turn = 0;
 let prevSpeed = 0, prevTurn = 0;
 let triggerSend = false;
 
+const maxSpeed = 30; // Max speed percentage
+const maxTurn = 30; // Max turn percentage
+
 const joystick = document.getElementById('joystick');
 const container = document.getElementById('joystickContainer');
 const speedDisplay = document.getElementById('speed');
@@ -62,8 +65,8 @@ function drag(e) {
     joystick.style.transform = `translate(calc(-50% + ${deltaX}px), calc(-50% + ${deltaY}px))`;
     
     // Calculate speed and turn values
-    speed = Math.max(Math.round(-deltaY / maxDistance * 100), 0); // Negative for forward
-    turn = Math.round(deltaX / maxDistance * 100);
+    speed = Math.max(Math.round(-deltaY / maxDistance * maxSpeed), 0); // Negative for forward
+    turn = Math.round(deltaX / maxDistance * maxTurn);
     
     triggerSend = true;
 }
