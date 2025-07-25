@@ -124,6 +124,34 @@ void setupWebServer() {
 
 void handleRoot() {
   String html = R"(
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>RC Car Controller</title>
+    <link rel="stylesheet" href="https://pcwu2022.github.io/rc_car_ino/data/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🏎️ RC Car Controller</h1>
+        
+        <div class="status">
+            <div>Speed: <span id="speed">0</span>%</div>
+            <div>Turn: <span id="turn">0</span>%</div>
+            <div>Status: <span id="status">Ready</span></div>
+        </div>
+        
+        <div class="joystick-container" id="joystickContainer">
+            <div class="joystick" id="joystick"></div>
+        </div>
+        
+        <button class="emergency-stop" onclick="emergencyStop() ">🛑 EMERGENCY STOP</button>
+    </div>
+
+    <script src="https://pcwu2022.github.io/rc_car_ino/data/script.js"></script>
+</body>
+</html>
   )";
   
   server.send(200, "text/html", html);
