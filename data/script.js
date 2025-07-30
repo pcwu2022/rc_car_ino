@@ -52,7 +52,7 @@ function drag(e) {
     let deltaY = clientY - centerY;
     
     // Limit movement to circle
-    const maxDistance = 70;
+    const maxDistance = 100;
     const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
     
     if (distance > maxDistance) {
