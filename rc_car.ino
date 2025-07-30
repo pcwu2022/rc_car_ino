@@ -21,8 +21,8 @@ const int MOTOR_NEUTRAL = 1500;  // ESC neutral position (1500µs)
 const int MOTOR_MIN = 1000;      // ESC minimum (1000µs)
 const int MOTOR_MAX = 2000;      // ESC maximum (2000µs)
 const int SERVO_CENTER = 90;     // Servo center position
-const int SERVO_MAX_LEFT = 60;   // Maximum left turn (90-30)
-const int SERVO_MAX_RIGHT = 120; // Maximum right turn (90+30)
+const int SERVO_MAX_LEFT = 0;   // Maximum left turn (90-90)
+const int SERVO_MAX_RIGHT = 180; // Maximum right turn (90+90)
 
 // Current control values
 int currentSpeed = 0;    // -100 to 100
@@ -86,6 +86,10 @@ void initializeServo() {
   Serial.println("Initializing steering servo...");
   
   steeringServo.attach(SERVO_PIN);
+  steeringServo.write(SERVO_MAX_LEFT);
+  delay(1000);
+  steeringServo.write(SERVO_MAX_RIGHT);
+  delay(1000);
   steeringServo.write(SERVO_CENTER); // Point straight ahead
   
   delay(500);
@@ -127,29 +131,29 @@ void handleRoot() {
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=no'>
     <title>RC Car Controller</title>
-    <link rel="stylesheet" href="https://pcwu2022.github.io/rc_car_ino/data/style.css">
+    <link rel='stylesheet' href='https://pcwu2022.github.io/rc_car_ino/data/style.css'>
 </head>
 <body>
-    <div class="container">
+    <div class='container'>
         <h1>🏎️ RC Car Controller</h1>
         
-        <div class="status">
-            <div>Speed: <span id="speed">0</span>%</div>
-            <div>Turn: <span id="turn">0</span>%</div>
-            <div>Status: <span id="status">Ready</span></div>
+        <div class='status'>
+            <div>Speed: <span id='speed'>0</span>%</div>
+            <div>Turn: <span id='turn'>0</span>%</div>
+            <div>Status: <span id='status'>Ready</span></div>
         </div>
         
-        <div class="joystick-container" id="joystickContainer">
-            <div class="joystick" id="joystick"></div>
+        <div class='joystick-container' id='joystickContainer'>
+            <div class='joystick' id='joystick'></div>
         </div>
         
-        <button class="emergency-stop" onclick="emergencyStop() ">🛑 EMERGENCY STOP</button>
+        <button class='emergency-stop' onclick='emergencyStop() '>🛑 EMERGENCY STOP</button>
     </div>
 
-    <script src="https://pcwu2022.github.io/rc_car_ino/data/script.js"></script>
+    <script src='https://pcwu2022.github.io/rc_car_ino/data/script.js'></script>
 </body>
 </html>
   )";

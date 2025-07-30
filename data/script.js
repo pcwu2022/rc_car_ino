@@ -6,6 +6,7 @@ let triggerSend = false;
 
 const maxSpeed = 30; // Max speed percentage
 const maxTurn = 30; // Max turn percentage
+const controlIntervalTime = 100; // Control update interval in ms
 
 const joystick = document.getElementById('joystick');
 const container = document.getElementById('joystickContainer');
@@ -121,7 +122,7 @@ const controlInterval = setInterval(() => {
             prevTurn = 0;
         }
     }
-}, 500);
+}, controlIntervalTime);
 
 function emergencyStop() {
     fetch('/stop', {
