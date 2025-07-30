@@ -4,7 +4,7 @@ let speed = 0, turn = 0;
 let prevSpeed = 0, prevTurn = 0;
 let triggerSend = false;
 
-const maxSpeed = 30; // Max speed percentage
+const maxSpeed = parseInt(prompt("Enter max speed percentage:", "30") || 30); // Max speed percentage
 const maxTurn = 30; // Max turn percentage
 const controlIntervalTime = 100; // Control update interval in ms
 

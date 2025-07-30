@@ -10,6 +10,7 @@ const char* password = "12345678";
 const int LEFT_MOTOR_PIN = 12;   // GPIO 12 - Left rear wheel ESC
 const int RIGHT_MOTOR_PIN = 13;  // GPIO 13 - Right rear wheel ESC
 const int SERVO_PIN = 14;        // GPIO 14 - Steering servo
+const int BUZZER_PIN = 5;        // D1
 
 // Motor and servo objects
 Servo leftMotor;
@@ -21,8 +22,8 @@ const int MOTOR_NEUTRAL = 1500;  // ESC neutral position (1500µs)
 const int MOTOR_MIN = 1000;      // ESC minimum (1000µs)
 const int MOTOR_MAX = 2000;      // ESC maximum (2000µs)
 const int SERVO_CENTER = 90;     // Servo center position
-const int SERVO_MAX_LEFT = 0;   // Maximum left turn (90-90)
-const int SERVO_MAX_RIGHT = 180; // Maximum right turn (90+90)
+const int SERVO_MAX_LEFT = 60;   // Maximum left turn (90-90)
+const int SERVO_MAX_RIGHT = 120; // Maximum right turn (90+90)
 
 // Current control values
 int currentSpeed = 0;    // -100 to 100
@@ -35,6 +36,10 @@ ESP8266WebServer server(80);
 void setup() {
   Serial.begin(115200);
   Serial.println("RC Car Controller Starting...");
+
+  pinMode(BUZZER_PIN, OUTPUT);
+
+  tone(BUZZER_PIN, 440, 500);
   
   // Initialize motors and servo
   initializeMotors();
@@ -87,9 +92,9 @@ void initializeServo() {
   
   steeringServo.attach(SERVO_PIN);
   steeringServo.write(SERVO_MAX_LEFT);
-  delay(1000);
+  delay(500);
   steeringServo.write(SERVO_MAX_RIGHT);
-  delay(1000);
+  delay(500);
   steeringServo.write(SERVO_CENTER); // Point straight ahead
   
   delay(500);
@@ -103,6 +108,7 @@ void connectToWiFi() {
   WiFi.begin(ssid, password);
   
   while (WiFi.status() != WL_CONNECTED) {
+    tone(BUZZER_PIN, 523, 250);
     delay(500);
     Serial.print(".");
   }
@@ -111,6 +117,13 @@ void connectToWiFi() {
   Serial.println("WiFi connected!");
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
+
+  tone(BUZZER_PIN, 440, 250);
+  delay(250);
+  tone(BUZZER_PIN, 523, 250);
+  delay(250);
+  tone(BUZZER_PIN, 659, 250);
+  delay(250);
 }
 
 void setupWebServer() {
@@ -190,6 +203,7 @@ void handleEmergencyStop() {
   
   Serial.println("EMERGENCY STOP ACTIVATED!");
   server.send(200, "text/plain", "Emergency stop activated");
+  tone(BUZZER_PIN, 440, 1000);
 }
 
 void handleStatus() {
